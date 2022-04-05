@@ -2,6 +2,7 @@
 #include <samc21.h>
 
 //
+void test (Sercom *instance);
 void i2c_write (Sercom *instance, const uint8_t address, const uint8_t *data, const uint8_t size);
 void i2c_read  (Sercom *instance, const uint8_t address, const uint8_t reg, uint8_t *dest, const uint8_t size);
 
