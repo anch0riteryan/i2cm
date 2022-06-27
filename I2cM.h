@@ -12,8 +12,6 @@ typedef struct _i2c_master_handler {
 
 	void (*write) (Sercom *instance, const uint8_t address, const uint8_t *data, const uint8_t size);
 	void (*read)  (Sercom *instance, const uint8_t address, const uint8_t reg, uint8_t *dest, const uint8_t size);
-
-	void (*test) (Sercom *instance);
 } I2cMasterHandler;
 extern I2cMasterHandler *i2c;
 

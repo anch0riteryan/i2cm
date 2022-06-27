@@ -13,9 +13,6 @@ I2cMasterHandler *initI2cMaster (Sercom *sercom, void (*init) (void )) {
 	p->write = i2c_write;
 	p->read = i2c_read;
 
-	//
-	p->test = test;
-
 	//setup sercom
 	sercom->I2CM.CTRLA.bit.SWRST = 1;
 	while (sercom->I2CM.CTRLA.bit.SWRST);

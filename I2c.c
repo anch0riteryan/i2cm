@@ -4,16 +4,13 @@
 
 uint8_t addr = 0xe0;
 
-void test (Sercom *instance) {
-}
-
 void i2c_write (Sercom *instance, const uint8_t address, const uint8_t *data, const uint8_t size) {
 	while (instance->I2CM.STATUS.bit.BUSSTATE != 0x01);
 
 	i2cStart (instance, address);
 	if (i2cGetAck (instance)) { //nack
 		i2cStop (instance);
-
+		//printf ("i2c address 0x%02X nack, transcation stop.\n", address);
 		return;
 	}
 
@@ -74,7 +71,7 @@ uint8_t i2cGetAck (Sercom *instance) { //0:ACK 1:NACK
 		return 1;
 	}
 
-	if (instance->I2CM.INTFLAG.bit & 0x03) {
+	if ((instance->I2CM.INTFLAG.reg & 0x03) == 0) {
 		return 1;
 	}
 
@@ -110,7 +107,7 @@ void i2cStop (Sercom *instance) {
 	if (instance->I2CM.INTFLAG.reg & 0x03) {
 		i2cCmd (instance, 0x03);
 	} else {
-		printf ("tried stop bus but MB/SB is not set..\n");
+		//printf ("tried stop bus but MB/SB is not set..\n");
 	}
 }
 
