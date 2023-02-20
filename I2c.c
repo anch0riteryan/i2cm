@@ -95,7 +95,9 @@ void i2cCmd (Sercom *instance, const uint8_t cmd) {
 
 void i2cStart (Sercom *instance, const uint8_t address) {
 	instance->I2CM.ADDR.bit.ADDR = address;
-	while (instance->I2CM.INTFLAG.bit.MB == 0);
+	while (instance->I2CM.INTFLAG.bit.MB == 0) {
+		
+	}
 }
 
 void i2cReStart (Sercom *instance, const uint8_t address) {
@@ -123,5 +125,11 @@ uint8_t i2cReadByte (Sercom *instance) {
 	while (instance->I2CM.INTFLAG.bit.SB == 0);
 
 	return b;
+}
+
+void i2cWaitMB (Sercom *instance) {
+}
+
+void i2cWaitSB (Sercom *instance) {
 }
 

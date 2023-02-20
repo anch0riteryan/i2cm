@@ -7,7 +7,8 @@ I2cMasterHandler *initI2cMaster (Sercom *sercom, void (*init) (void )) {
 	p = malloc (sizeof (I2cMasterHandler));
 	p->instance = sercom;
 	p->init = init;
-
+	p->err = 0;
+	
 	p->init ();
 	p->isr = i2c_isr;
 	p->write = i2c_write;
@@ -47,34 +48,36 @@ I2cMasterHandler *initI2cMaster (Sercom *sercom, void (*init) (void )) {
 void i2c_isr (Sercom *instance) {
 	if (instance->I2CM.INTFLAG.bit.ERROR) {
 		if (instance->I2CM.STATUS.bit.LENERR) {
-			printf ("len err\n");
+			//printf ("len err\n");
 			instance->I2CM.STATUS.bit.LENERR = 1;
 		}
 
 		if (instance->I2CM.STATUS.bit.SEXTTOUT) {
-			printf ("slave scl time-out\n");
+			//printf ("slave scl time-out\n");
 			instance->I2CM.STATUS.bit.SEXTTOUT = 1;
 		}
 
 		if (instance->I2CM.STATUS.bit.MEXTTOUT) {
-			printf ("master scl time-out\n");
+			//printf ("master scl time-out\n");
 			instance->I2CM.STATUS.bit.MEXTTOUT = 1;
 		}
 
 		if (instance->I2CM.STATUS.bit.LOWTOUT) {
-			printf ("low time-out\n");
+			//printf ("low time-out\n");
 			instance->I2CM.STATUS.bit.LOWTOUT = 1;
 		}
 
 		if (instance->I2CM.STATUS.bit.ARBLOST) {
-			printf ("arb lost\n");
+			//printf ("arb lost\n");
 			instance->I2CM.STATUS.bit.ARBLOST = 1;
 		}
 
 		if (instance->I2CM.STATUS.bit.BUSERR) {
-			printf ("bus err\n");
+			//printf ("bus err\n");
 			instance->I2CM.STATUS.bit.BUSERR = 1;
 		}
+		
+		i2c->err = instance->I2CM.STATUS.reg;
 
 		instance->I2CM.INTFLAG.reg = 0x80;
 	}

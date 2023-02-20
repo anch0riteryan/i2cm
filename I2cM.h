@@ -6,6 +6,8 @@
 
 typedef struct _i2c_master_handler {
 	Sercom *instance;
+	
+	uint32_t err; //error status
 
 	void (*init) (void ); //
 	void (*isr) (Sercom *instance);

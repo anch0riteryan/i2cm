@@ -15,3 +15,6 @@ void i2cReStart (Sercom *instance, const uint8_t address);
 void i2cStop (Sercom *instance);
 void i2cWriteByte (Sercom *instance, uint8_t data);
 uint8_t i2cReadByte (Sercom *instance);
+
+void i2cWaitMB (Sercom *);
+void i2cWaitSB (Sercom *);
